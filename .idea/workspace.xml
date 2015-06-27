@@ -65,20 +65,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="config.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/libs/demo/config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="6.44" vertical-offset="161" max-vertical-offset="570">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="JerryRouter.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/libs/JerryRouter.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="384">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="570">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
@@ -88,8 +78,8 @@
       <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.96428573" vertical-offset="255" max-vertical-offset="874">
-              <caret line="12" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="62" />
+            <state vertical-scroll-proportion="0.96428573" vertical-offset="331" max-vertical-offset="912">
+              <caret line="16" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="62" />
               <folding />
             </state>
           </provider>
@@ -162,20 +152,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="JerryModule" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JerryModules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JerryModule" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libs" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -451,8 +427,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.96428573" vertical-offset="255" max-vertical-offset="874">
-          <caret line="12" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="62" />
+        <state vertical-scroll-proportion="0.96428573" vertical-offset="331" max-vertical-offset="912">
+          <caret line="16" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="62" />
           <folding />
         </state>
       </provider>
@@ -467,15 +443,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/libs/demo/config.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="6.44" vertical-offset="161" max-vertical-offset="570">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libs/JerryRouter.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="409">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="570">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
