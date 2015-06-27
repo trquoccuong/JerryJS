@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Module manager system</title>
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+  <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+
+  <style>
+    #sortable {list-style: none}
+    #sortable li.list-group-item { margin: 0 5px 5px 5px; height: 120px}
+    .ui-state-highlight { height: 120px; line-height: 1.2em; }
+    .badge {
+      background-color: red;
+    }
+    .fix-bar {
+      position: fixed;
+      top: 0%;
+    }
+  </style>
+  <script>
+    $(function() {
+//      $( "#sortable" ).sortable({
+//        placeholder: "ui-state-highlight"
+//      });
+//      $("#sortable").on('click','.moduleStatus', function (event) {
+//        event.preventDefault();
+//        if($(this).text() === "Off") {
+//          $(this).removeClass('btn-danger').addClass('btn-success');
+//          $(this).text("Active")
+//        } else {
+//          $(this).removeClass('btn-success').addClass('btn-danger');
+//          $(this).text("Off")
+//        }
+//      })
+    });
+
+  </script>
+</head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">JerryJS</a>
+    </div>
+    <div class="navbar-form navbar-left" >
+      <a class="btn btn-default">Document</a>
+        <a href="/router" class="btn btn-default">Router Manager</a>
+    </div>
+    <div class="navbar-form navbar-right" >
+      <button class="btn btn-default" onclick="$('#zip_file').click();">Import</button>
+      {#<button class="btn btn-primary">Save</button>#}
+        <form method="post" action="/modules/import" enctype="multipart/form-data">
+            <input type="file" id="zip_file" name="zip_file" onchange="this.form.submit();" style="display: none;" />
+        </form>
+    </div>
+
+  </div><!-- /.container-fluid -->
+</nav>
+<div class="container">
+  <ul id="sortable" class="list-group">
+    {% for module in data %}
+      <li class="list-group-item">
+          <h4 class="module-title">
+            {{ module.name }}  {% if module.duplicate.length > 0 %} <span class="badge">Having duplicated module name</span> {% endif %}
+            {% if module.active %}
+              <button class="btn btn-success pull-right moduleStatus">Active</button>
+            {% else %}
+              <button class="btn btn-danger pull-right moduleStatus">Off</button>
+            {% endif %}
+          </h4>
+          <h6 class="module-path">
+            Path: <i>{{ module.path }}</i>
+          </h6>
+          <div>
+            <b>Associate:</b>
+            <select class="select-box pull-right" multiple="multiple" style="width: 80%" disabled>
+              {% for mod in data %}
+                {% if mod.name != module.name %}
+                  <option value="{{ mod.name }}" {% for name in module.associate %} {% if name == mod.name %} selected {% endif %}{% endfor %}>{{ mod.name }}</option>
+                {% endif %}
+              {% endfor %}
+            </select>
+          </div>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+</body>
+<script>
+  $(".select-box").select2();
+</script>
+</html>
