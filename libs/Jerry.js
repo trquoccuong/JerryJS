@@ -38,7 +38,6 @@ Jerry.config = function (config) {
             path: '/custom_filters'
         }
     }
-
     userConfig = _.assign(defaultConfig, config);
     let requester = stack[1].getFileName();
 
@@ -52,7 +51,7 @@ Jerry.config = function (config) {
         global.JerryBase = path.dirname(requester);
     }
 
-    if(!fs.existsSync(JerryBase + userConfig.config.path)){
+    if(!fs.existsSync(JerryBase + userConfig.config.path) && !fs.existsSync(JerryBase + userConfig.config.path +'/config.js')){
         fs.mkdirSync(JerryBase + userConfig.config.path);
         fs.createReadStream(__dirname + '/demo/config.js').pipe(fs.createWriteStream(JerryBase + userConfig.config.path +'/config.js'));
         console.log('You can change default setting in file config/config.js')
