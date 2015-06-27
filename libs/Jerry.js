@@ -100,6 +100,12 @@ Jerry.start = function (app,option) {
         if (!fs.existsSync(JerryBase + userConfig.modules.path + '/router')) {
             fsEx.copySync(thisFolder + '/system/router/',JerryBase + '/modules/router/');
         }
+    };
+
+    if(option && option.demo) {
+        if (!fs.existsSync(JerryBase + userConfig.modules.path + '/demo')) {
+            fsEx.copySync(thisFolder + '/demo/index/',JerryBase + '/modules/index/');
+        }
     }
 
     if (!fs.existsSync(JerryBase + userConfig.config.path + '/moduleConfig.json')) {
