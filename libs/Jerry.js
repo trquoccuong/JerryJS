@@ -18,7 +18,7 @@ let userConfig;
 let Jerry = {};
 
 
-Jerry.config = function (config) {
+Jerry.config = function (option) {
     let stack = calls();
     let defaultConfig = {
         backend: {
@@ -38,9 +38,8 @@ Jerry.config = function (config) {
             path: '/custom_filters'
         }
     }
-    userConfig = _.assign(defaultConfig, config);
     let requester = stack[1].getFileName();
-
+    userConfig = defaultConfig;
     /**
      * Install global function
      */
@@ -50,14 +49,19 @@ Jerry.config = function (config) {
     } else {
         global.JerryBase = path.dirname(requester);
     }
-
+    let config;
     if(!fs.existsSync(JerryBase + userConfig.config.path) && !fs.existsSync(JerryBase + userConfig.config.path +'/config.js')){
         fs.mkdirSync(JerryBase + userConfig.config.path);
-        fs.createReadStream(__dirname + '/demo/config.js').pipe(fs.createWriteStream(JerryBase + userConfig.config.path +'/config.js'));
-        console.log('You can change default setting in file config/config.js')
+        if(option && option.config) {
+            fs.createReadStream(__dirname + '/demo/config.js').pipe(fs.createWriteStream(JerryBase + userConfig.config.path +'/config.js'));
+            console.log('You can change default setting in file config/config.js')
+        }
+    } else {
+        config = require(JerryBase + userConfig.config.path +'/config.js');
     }
+    userConfig = _.assign(defaultConfig, config);
 
-    if (userConfig.database){
+    if (userConfig.database && userConfig.database.connString){
         db = new Sequelize(userConfig.database.connString, userConfig.database.option);
     }
 

@@ -18,7 +18,7 @@ module.exports = {
         path: '/custom_filters'
     },
     database : {
-        //connString : 'postgres://quoccuong:@localhost:5432/Demo',
+        //connString : 'postgres://quoccuong:@localhost:5432/tech',
         //option : { logging : false}
     },
     basePath : require('path').resolve(__dirname,'..')
