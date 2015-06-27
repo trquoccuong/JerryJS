@@ -15,6 +15,8 @@ class Controllers extends JerryController {
             })
             myModule.render('index.html',{data : arrModule}).then(function (html) {
                 res.send(html);
+            }).catch(function (err) {
+                res.send(err);
             })
         };
         this.importModule = function (req,res) {

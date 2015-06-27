@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>jQuery UI Sortable - Drop placeholder</title>
+  <title>Module manager system</title>
 
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
@@ -32,19 +32,19 @@
   </style>
   <script>
     $(function() {
-      $( "#sortable" ).sortable({
-        placeholder: "ui-state-highlight"
-      });
-      $("#sortable").on('click','.moduleStatus', function (event) {
-        event.preventDefault();
-        if($(this).text() === "Off") {
-          $(this).removeClass('btn-danger').addClass('btn-success');
-          $(this).text("Active")
-        } else {
-          $(this).removeClass('btn-success').addClass('btn-danger');
-          $(this).text("Off")
-        }
-      })
+//      $( "#sortable" ).sortable({
+//        placeholder: "ui-state-highlight"
+//      });
+//      $("#sortable").on('click','.moduleStatus', function (event) {
+//        event.preventDefault();
+//        if($(this).text() === "Off") {
+//          $(this).removeClass('btn-danger').addClass('btn-success');
+//          $(this).text("Active")
+//        } else {
+//          $(this).removeClass('btn-success').addClass('btn-danger');
+//          $(this).text("Off")
+//        }
+//      })
     });
 
   </script>
@@ -57,11 +57,12 @@
       <a class="navbar-brand" href="#">JerryJS</a>
     </div>
     <div class="navbar-form navbar-left" >
-      <button class="btn btn-default">Document</button>
+      <a class="btn btn-default">Document</a>
+        <a href="/router" class="btn btn-default">Router Manager</a>
     </div>
     <div class="navbar-form navbar-right" >
       <button class="btn btn-default" onclick="$('#zip_file').click();">Import</button>
-      <button class="btn btn-primary">Save</button>
+      {#<button class="btn btn-primary">Save</button>#}
         <form method="post" action="/modules/import" enctype="multipart/form-data">
             <input type="file" id="zip_file" name="zip_file" onchange="this.form.submit();" style="display: none;" />
         </form>
@@ -86,14 +87,13 @@
           </h6>
           <div>
             <b>Associate:</b>
-            <select class="select-box pull-right" multiple="multiple" style="width: 80%">
+            <select class="select-box pull-right" multiple="multiple" style="width: 80%" disabled>
               {% for mod in data %}
                 {% if mod.name != module.name %}
                   <option value="{{ mod.name }}" {% for name in module.associate %} {% if name == mod.name %} selected {% endif %}{% endfor %}>{{ mod.name }}</option>
                 {% endif %}
               {% endfor %}
             </select>
-            <button class="btn btn-primary">Export module</button>
           </div>
       </li>
     {% endfor %}

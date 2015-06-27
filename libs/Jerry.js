@@ -8,6 +8,8 @@ let Sequelize = require('sequelize');
 let nunjucks = require('nunjucks');
 let _ = require('lodash');
 let calls = require('callsite');
+let fsEx = require('fs-extra');
+let thisFolder = __dirname;
 
 let db;
 let envBack;
@@ -31,6 +33,9 @@ Jerry.config = function (config) {
         adminRouter: 'admin',
         config: {
             path:'/config'
+        },
+        custom_filter: {
+            path: '/custom_filters'
         }
     }
 
@@ -61,8 +66,17 @@ Jerry.config = function (config) {
     global.JerryController = require('./JerryController');
     global.JerryRouter = require('./JerryRouter');
 
+    /**
+     * Install View
+     */
     envBack = new nunjucks.Environment(new nunjucks.FileSystemLoader([JerryBase + userConfig.backend.path, JerryBase + userConfig.modules.path]));
     envFront = new nunjucks.Environment(new nunjucks.FileSystemLoader([JerryBase + userConfig.frontend.path, JerryBase + userConfig.modules.path]));
+
+    glob.sync(JerryBase + userConfig.custom_filter.path + '/*.js').forEach(function (file) {
+        require(file)(envBack);
+        require(file)(envFront);
+    })
+
 }
 
 
@@ -74,6 +88,14 @@ Jerry.start = function (app,option) {
             if (fs.existsSync(link)) {
                 fs.unlinkSync(link);
             }
+    }
+    if(option && option.manager) {
+        if (!fs.existsSync(JerryBase + userConfig.modules.path + '/module')) {
+            fsEx.copySync(thisFolder + '/system/module/',JerryBase + '/modules/module/');
+        }
+        if (!fs.existsSync(JerryBase + userConfig.modules.path + '/router')) {
+            fsEx.copySync(thisFolder + '/system/router/',JerryBase + '/modules/router/');
+        }
     }
 
     if (!fs.existsSync(JerryBase + userConfig.config.path + '/moduleConfig.json')) {
@@ -95,7 +117,14 @@ Jerry.start = function (app,option) {
                 }
                 modules[moduleName] = {};
                 modules[moduleName].name = moduleName;
-                modules[moduleName].active = false;
+                if(option && option.manager) {
+                    if(moduleName == 'router' || moduleName == "module") {
+                        modules[moduleName].active = true;
+
+                    }
+                } else {
+                    modules[moduleName].active = false;
+                }
                 modules[moduleName].path = path.resolve(file,'..');
                 modules[moduleName].associate = [];
                 modules[moduleName].order = i++;
@@ -106,13 +135,6 @@ Jerry.start = function (app,option) {
         fs.writeFileSync(JerryBase + userConfig.config.path + '/moduleConfig.json',data);
         
         console.log(`Check file ${userConfig.config.path}/moduleConfig.js for active module `);
-
-        if(option) {
-            if(option.autoExit) {
-                process.exit();
-            }
-        }
-
     }
 
     let moduleInfo = JSON.parse(fs.readFileSync(JerryBase + userConfig.config.path + '/moduleConfig.json', 'utf8'));
@@ -140,7 +162,7 @@ Jerry.start = function (app,option) {
     /**
      * Load route from modules
      */
-    if(option && option.routerTable) {
+    if(option && option.manager) {
             let routerInfo = {};
             routerInfo.front = {};
             routerInfo.back ={};
