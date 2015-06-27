@@ -54,7 +54,8 @@ Jerry.config = function (option) {
         fs.mkdirSync(JerryBase + userConfig.config.path);
     }
     if(!fs.existsSync(JerryBase + userConfig.config.path +'/config.js')){
-        fs.createReadStream(thisFolder + '/demo/config.js').pipe(fs.createWriteStream(JerryBase + userConfig.config.path +'/config.js'));
+        fsEx.copySync(thisFolder + '/demo/config.js',JerryBase + userConfig.config.path +'/config.js');
+        //fs.createReadStream(__dirname + '/demo/config.js').pipe(fs.createWriteStream(JerryBase + userConfig.config.path +'/config.js'));
         console.log('You can change default setting in file config/config.js')
     } else {
         config = require(JerryBase + userConfig.config.path +'/config.js');
@@ -79,6 +80,7 @@ Jerry.config = function (option) {
         require(file)(envBack);
         require(file)(envFront);
     })
+    return;
 }
 
 
