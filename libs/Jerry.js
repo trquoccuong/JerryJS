@@ -131,6 +131,8 @@ Jerry.start = function (app,option) {
                     if(moduleName == 'router' || moduleName == "module") {
                         modules[moduleName].active = true;
 
+                    } else {
+                        modules[moduleName].active = false;
                     }
                 } else {
                     modules[moduleName].active = false;
