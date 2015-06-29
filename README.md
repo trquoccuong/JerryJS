@@ -18,22 +18,22 @@ $ npm install mysql
 $ npm install sqlite3
 
 ```
-### Jerry Requirement
+### JerryJS Requirement
 
 I write JerryJs with many feature of ES6. For run JerryJS you need iojs newest version.
 
-### Start Jerry
+### Start JerryJS
 For beginner
 1. Make a new project folder.
 2. Make a file server.js
 ``` 
 'use strict';
 var express = require('express');
-var jerry = require("jerryjs");
+var JerryJS = require("jerryjs");
 
 var app = express();
-jerry.config();
-jerry.start(app,{ force : true , manager : true , demo : true });
+JerryJS.config();
+JerryJS.start(app,{ force : true , manager : true , demo : true });
 app.listen(8118);
 ```
 3. Run a command
@@ -41,14 +41,14 @@ app.listen(8118);
 $ node server.js
 ```
 4. Go to browser with link http://localhost:8118/modules
-### Jerry start option
+### JerryJS start option
 | File  | Desciption |
 | ------------- | ------------- |
-| force | remake file module Manager every run node
-|manager | enable 2 support module 
-|demo |  enable demo module
+| force | remake file module Manager every run node |
+| manager | enable 2 support module |
+| demo |  enable demo module|
 
-### Jerry project construction
+### JerryJS project construction
 ```
 -Your project
 ----config
@@ -64,16 +64,16 @@ $ node server.js
 ```
 | File  | Desciption |
 | ------------- | ------------- |
-| config | All jerry config
-| modules | folder contain all your modules
-| custom_filters | nunjucks custom filter (optional)
-| layout | backend, frontend layout (optional)
-| public | resources(*.css,*.js,*.jpg , v.v)
-| server.js | running jerry
-### Jerry module construction
+| config | All JerryJS config |
+| modules | folder contain all your modules |
+| custom_filters | nunjucks custom filter (optional) |
+| layout | backend, frontend layout (optional) |
+| public | resources(*.css,*.js,*.jpg , v.v) |
+| server.js | running JerryJS |
+### JerryJS module construction 
 
 ```
--Jerry module
+-JerryJS module
 ----admin
 --------controllers
 ------------index.js
@@ -89,7 +89,7 @@ $ node server.js
 ```
 | File  | Desciption |
 | ------------- | ------------- |
- | module.js | File declare  Jerry module |
+| module.js | File declare  JerryJS module |
 | admin | Folder backend |
 | admin/controllers/index.js | declare backend controllers |
 | admin/views | partial views backend folder |
@@ -97,7 +97,7 @@ $ node server.js
 | controllers/index.js | declare frontend controllers |
 | views | partial views frontend folder |
 | models | file models sequelize of this module |
-| route.js | frontend router file
+| route.js | frontend router file |
 
 One module is not really have all this file. Module only need module.js file. **Warning** controllers must be declare in index file before use in router.
 
@@ -140,14 +140,14 @@ You should declare controller inside **constructor** for use myModule.
 myModule contain all information of your module. 
 | Property  | Desciption |
 | ------------- | ------------- |
-| myModule.models | Object module models. You can call own models or associated 
-| myModule.configurations | all info you set in module.js
+| myModule.models | Object module models. You can call own models or associated |
+| myModule.configurations | all info you set in module.js |
 
 *Note* :You can rename myModule
 
 ### Render view
 
-Jerry has 2 methods to render view. They get template view from  folder **views** inside each module, Some view you want to reuse put them in **layout** folder
+JerryJS has 2 methods to render view. They get template view from  folder **views** inside each module, Some view you want to reuse put them in **layout** folder
 ```
 myModule.render(view, option)
 myModule.adminRender(view,option)
@@ -162,7 +162,7 @@ myModule.render("index.html", {data : queryResults})
 
 ### Make a model
 
-Jerry use Sequelize for connect database. Put all models file in **models** folder. Sometime you want to call models of other module.You need make an associate models. **Warning** :You only use actived module models
+JerryJS use Sequelize for connect database. Put all models file in **models** folder. Sometime you want to call models of other module.You need make an associate models. **Warning** :You only use actived module models
 ```
 "use strict";
 
@@ -219,34 +219,34 @@ module.exports = DemoRouter;
 Remove module manager and route manager when deploy app.
 
 ### Router  file
-Jerry auto load router in actived module.  This file only use for easy to debug your route. There are two categories: front and back. 
+JerryJS auto load router in actived module.  This file only use for easy to debug your route. There are two categories: front and back. 
 | Property  | Desciption |
 | ------------- | ------------- |
-|method | method of router( POST, GET, DELETE, PUT) ,
-|path | url you declare
-|regexp | Regex express
+| method | method of router( POST, GET, DELETE, PUT) |
+| path | url you declare |
+| regexp | Regex express |
 
 You can use router manager module for a visual layout.
 
 ### Module config file
 
-Jerry auto create a file moduleConfig.json. This file contain all modules info, you can change this file manually or using module manager layout.
+JerryJS auto create a file moduleConfig.json. This file contain all modules info, you can change this file manually or using module manager layout.
 | Property  | Desciption |
 | ------------- | ------------- |
-|name | module name 
-|path | module folder
-|active | module status (only actived module be loaded)
-|associate | List other modules link with this module.if module associated you call module models of all those modules.
-|order | Order loading module (ascending). Order loading sometimemake problems with order router.
-Duplicate | Only the first active module loaded.Other modules with same name will be added path to this array. Remember module.name is unique in your project
+| name | module name |
+| path | module folder |
+| active | module status (only actived module be loaded) |
+| associate | List other modules link with this module.if module associated you call module models of all those modules. |
+| order | Order loading module (ascending). Order loading sometimemake problems with order router. |
+| Duplicate | Only the first active module loaded.Other modules with same name will be added path to this array. Remember module.name is unique in your project |
 
 ### Nunjuck filter
 
-Nunjucks support developer make custom filter. To install custom filter to Jerry, you need create folder name 'custom_filters' and make a filter like this example
+Nunjucks support developer make custom filter. To install custom filter to JerryJS, you need create folder name 'custom_filters' and make a filter like this example
 
 ### Using middleware
 
-Add middleware before or after jerry.start. This middleware auto active. Middleware after app.listen is disable. Read more about middleware at Express site
+Add middleware before or after JerryJS.start. This middleware auto active. Middleware after app.listen is disable. Read more about middleware at Express site
 
 ### Sharing module
 
