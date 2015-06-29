@@ -41,7 +41,10 @@ app.listen(8118);
 $ node server.js
 ```
 4. Go to browser with link http://localhost:8118/modules
+
+
 ### JerryJS start option
+
 | File  | Desciption |
 | ------------- | ------------- |
 | force | remake file module Manager every run node |
@@ -62,6 +65,7 @@ $ node server.js
 ----public
 ----server.js
 ```
+
 | File  | Desciption |
 | ------------- | ------------- |
 | config | All JerryJS config |
@@ -137,7 +141,8 @@ module.exports = Controllers;
 ```
 
 You should declare controller inside **constructor** for use myModule.
-myModule contain all information of your module. 
+myModule contain all information of your module.
+
 | Property  | Desciption |
 | ------------- | ------------- |
 | myModule.models | Object module models. You can call own models or associated |
@@ -219,7 +224,9 @@ module.exports = DemoRouter;
 Remove module manager and route manager when deploy app.
 
 ### Router  file
+
 JerryJS auto load router in actived module.  This file only use for easy to debug your route. There are two categories: front and back. 
+
 | Property  | Desciption |
 | ------------- | ------------- |
 | method | method of router( POST, GET, DELETE, PUT) |
@@ -231,6 +238,7 @@ You can use router manager module for a visual layout.
 ### Module config file
 
 JerryJS auto create a file moduleConfig.json. This file contain all modules info, you can change this file manually or using module manager layout.
+
 | Property  | Desciption |
 | ------------- | ------------- |
 | name | module name |
