@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=640">
+
+    <link rel="stylesheet" href="stylesheets/core.css" media="screen">
+    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+
+    <script type="text/javascript" src="javascripts/modernizr.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#main_content').headsmart()
+      })
+    </script>
+    <title>Jerryjs by trquoccuong</title>
+  </head>
+
+  <body>
+    <a id="forkme_banner" href="https://github.com/trquoccuong/JerryJS">View on GitHub</a>
+    <div class="shell">
+
+      <header>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <h1>Jerryjs</h1>
+            <h2>Nodejs Framework</h2>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+      </header>
+
+      <section id="downloads">
+        <span class="inner">
+          <a href="https://github.com/trquoccuong/JerryJS/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/trquoccuong/JerryJS/tarball/master" class="tgz"><em>download</em> .TGZ</a>
+        </span>
+      </section>
+
+
+      <span class="banner-fix"></span>
+
+
+      <section id="main_content">
+        <h1>
+<a id="jerryjs" class="anchor" href="#jerryjs" aria-hidden="true"><span class="octicon octicon-link"></span></a>JerryJS</h1>
+
+<h3>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h3>
+
+<blockquote>
+<p>JerryJS is a mini framework Nodejs. It use Express for manage route and controller, Sequelize for communicate with database , Nunjucks for view template engine. JerryJS follow "Convention Over Configuration". We make some rules for reuse module across projects. This framework try to wrap all (model,controller,route,view) in module and you can easily import or export to another system. JerryJS includes some support modules for help developer manage system.</p>
+</blockquote>
+
+<h3>
+<a id="setup-jerryjs" class="anchor" href="#setup-jerryjs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup JerryJS</h3>
+
+<p>JerryJS cover Express so you need install express.</p>
+
+<pre><code>$ npm install jerryjs
+$ npm install express
+</code></pre>
+
+<p>If you use database you need install some package depend on your database</p>
+
+<pre><code>$ npm install pg pg-hstore // for Postgres
+$ npm install mysql
+$ npm install sqlite3
+
+</code></pre>
+
+<h3>
+<a id="jerryjs-requirement" class="anchor" href="#jerryjs-requirement" aria-hidden="true"><span class="octicon octicon-link"></span></a>JerryJS Requirement</h3>
+
+<p>I write JerryJs with many feature of ES6. For run JerryJS you need iojs newest version.</p>
+
+<h3>
+<a id="start-jerryjs" class="anchor" href="#start-jerryjs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Start JerryJS</h3>
+
+<p>For beginner
+1. Make a new project folder.
+2. Make a file server.js</p>
+
+<pre><code>'use strict';
+var express = require('express');
+var JerryJS = require("jerryjs");
+
+var app = express();
+JerryJS.config();
+JerryJS.start(app,{ force : true , manager : true , demo : true });
+app.listen(8118);
+</code></pre>
+
+<ol>
+<li>Run a command</li>
+</ol>
+
+<pre><code>$ node server.js
+</code></pre>
+
+<ol>
+<li>Go to browser with link http://localhost:8118/modules</li>
+</ol>
+
+<h3>
+<a id="jerryjs-start-option" class="anchor" href="#jerryjs-start-option" aria-hidden="true"><span class="octicon octicon-link"></span></a>JerryJS start option</h3>
+
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Desciption</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>force</td>
+<td>remake file module Manager every run node</td>
+</tr>
+<tr>
+<td>manager</td>
+<td>enable 2 support module</td>
+</tr>
+<tr>
+<td>demo</td>
+<td>enable demo module</td>
+</tr>
+</tbody>
+</table>
+
+<h3>
+<a id="jerryjs-project-construction" class="anchor" href="#jerryjs-project-construction" aria-hidden="true"><span class="octicon octicon-link"></span></a>JerryJS project construction</h3>
+
+<pre><code>-Your project
+----config
+-------config.js
+-------moduleConfig.json
+-------routerTable.json
+----modules
+----custom_filters
+----layout
+-------admin
+----public
+----server.js
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Desciption</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>config</td>
+<td>All JerryJS config</td>
+</tr>
+<tr>
+<td>modules</td>
+<td>folder contain all your modules</td>
+</tr>
+<tr>
+<td>custom_filters</td>
+<td>nunjucks custom filter (optional)</td>
+</tr>
+<tr>
+<td>layout</td>
+<td>backend, frontend layout (optional)</td>
+</tr>
+<tr>
+<td>public</td>
+<td>resources(<em>.css,</em>.js,*.jpg , v.v)</td>
+</tr>
+<tr>
+<td>server.js</td>
+<td>running JerryJS</td>
+</tr>
+</tbody>
+</table>
+
+<h3>
+<a id="jerryjs-module-construction" class="anchor" href="#jerryjs-module-construction" aria-hidden="true"><span class="octicon octicon-link"></span></a>JerryJS module construction</h3>
+
+<pre><code>-JerryJS module
+----admin
+--------controllers
+------------index.js
+--------views
+--------route.js
+----controllers
+--------index.js
+----views
+----models
+----route.js
+----module.js
+
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Desciption</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>module.js</td>
+<td>File declare  JerryJS module</td>
+</tr>
+<tr>
+<td>admin</td>
+<td>Folder backend</td>
+</tr>
+<tr>
+<td>admin/controllers/index.js</td>
+<td>declare backend controllers</td>
+</tr>
+<tr>
+<td>admin/views</td>
+<td>partial views backend folder</td>
+</tr>
+<tr>
+<td>admin/route.js</td>
+<td>backend router file</td>
+</tr>
+<tr>
+<td>controllers/index.js</td>
+<td>declare frontend controllers</td>
+</tr>
+<tr>
+<td>views</td>
+<td>partial views frontend folder</td>
+</tr>
+<tr>
+<td>models</td>
+<td>file models sequelize of this module</td>
+</tr>
+<tr>
+<td>route.js</td>
+<td>frontend router file</td>
+</tr>
+</tbody>
+</table>
+
+<p>One module is not really have all this file. Module only need module.js file. <strong>Warning</strong> controllers must be declare in index file before use in router.</p>
+
+<h3>
+<a id="make-a-module" class="anchor" href="#make-a-module" aria-hidden="true"><span class="octicon octicon-link"></span></a>Make a module</h3>
+
+<pre><code>'use strict';
+class Index extends JerryModule {
+    constructor(){
+        super();
+        this.configurations  = {
+            name:'index'
+        };
+    }
+};
+
+module.exports = Index;
+</code></pre>
+
+<p>You must have module.configuration.name . This name is unique in project.</p>
+
+<h3>
+<a id="make-a-controller" class="anchor" href="#make-a-controller" aria-hidden="true"><span class="octicon octicon-link"></span></a>Make a controller</h3>
+
+<p>Controller must be declared in file <strong>controllers/index.js</strong></p>
+
+<pre><code>class Controllers extends JerryController {
+        constructor(myModule) {
+                super(myModule);
+                this.index = function (req, res) {
+                        res.send('Hello World');
+                };
+        }
+}
+
+module.exports = Controllers;
+
+</code></pre>
+
+<p>You should declare controller inside <strong>constructor</strong> for use myModule.
+myModule contain all information of your module.</p>
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Desciption</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>myModule.models</td>
+<td>Object module models. You can call own models or associated</td>
+</tr>
+<tr>
+<td>myModule.configurations</td>
+<td>all info you set in module.js</td>
+</tr>
+</tbody>
+</table>
+
+<p><em>Note</em> :You can rename myModule</p>
+
+<h3>
+<a id="render-view" class="anchor" href="#render-view" aria-hidden="true"><span class="octicon octicon-link"></span></a>Render view</h3>
+
+<p>JerryJS has 2 methods to render view. They get template view from  folder <strong>views</strong> inside each module, Some view you want to reuse put them in <strong>layout</strong> folder</p>
+
+<pre><code>myModule.render(view, option)
+myModule.adminRender(view,option)
+</code></pre>
+
+<p>They return a promise with result is rendered html
+<em>Example:</em></p>
+
+<pre><code>myModule.render("index.html", {data : queryResults})
+.then(function(html){ res.send (html)})
+.catch(function(err){console.log(err)});
+</code></pre>
+
+<h3>
+<a id="make-a-model" class="anchor" href="#make-a-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Make a model</h3>
+
+<p>JerryJS use Sequelize for connect database. Put all models file in <strong>models</strong> folder. Sometime you want to call models of other module.You need make an associate models. <strong>Warning</strong> :You only use actived module models</p>
+
+<pre><code>"use strict";
+
+module.exports = function (sequelize, DataTypes) {
+    let User = sequelize.define("user", {
+        id : {type : DataTypes.INTEGER ,
+            primaryKey : true,
+        autoIncrement :true} ,
+        name: DataTypes.STRING(60)
+    }, {
+        timestamps: false,
+        freezeTableName: true
+    });
+    User.sync();
+    return User;
+};
+</code></pre>
+
+<p>For associate models add code like below  under the freezeTableName property</p>
+
+<pre><code>classMethod :{
+    associate : function () {
+        return [
+            [User.hasmany, 'book', {foreignKey: 'book_id'}]
+        ]
+    }
+}
+</code></pre>
+
+<p>models can has many association. Every association is a array with array[0] is method associate Sequelize, array[2] is model name, array[3] is option. You can find more information</p>
+
+<p>for use models to query database :</p>
+
+<pre><code>myModule.models.user.findById(1)
+</code></pre>
+
+<p>You must code this inside controller. Sequelize support many method for query</p>
+
+<h3>
+<a id="make-a-route" class="anchor" href="#make-a-route" aria-hidden="true"><span class="octicon octicon-link"></span></a>Make a route</h3>
+
+<p>Jerryjs have all feature of express router. you must declare router inside constructor . You only call controllers of this module. if controller is declared, program will throw an error</p>
+
+<pre><code>'use strict';
+
+class DemoRouter extends JerryRouter {
+    constructor(controllers){
+        super()
+        this.route('/').get(controllers.index);
+    }
+}
+
+module.exports = DemoRouter;
+</code></pre>
+
+<h3>
+<a id="warning-when-deploy-app" class="anchor" href="#warning-when-deploy-app" aria-hidden="true"><span class="octicon octicon-link"></span></a>Warning when deploy app</h3>
+
+<p>Remove module manager and route manager when deploy app.</p>
+
+<h3>
+<a id="router--file" class="anchor" href="#router--file" aria-hidden="true"><span class="octicon octicon-link"></span></a>Router  file</h3>
+
+<p>JerryJS auto load router in actived module.  This file only use for easy to debug your route. There are two categories: front and back. </p>
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Desciption</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>method</td>
+<td>method of router( POST, GET, DELETE, PUT)</td>
+</tr>
+<tr>
+<td>path</td>
+<td>url you declare</td>
+</tr>
+<tr>
+<td>regexp</td>
+<td>Regex express</td>
+</tr>
+</tbody>
+</table>
+
+<p>You can use router manager module for a visual layout.</p>
+
+<h3>
+<a id="module-config-file" class="anchor" href="#module-config-file" aria-hidden="true"><span class="octicon octicon-link"></span></a>Module config file</h3>
+
+<p>JerryJS auto create a file moduleConfig.json. This file contain all modules info, you can change this file manually or using module manager layout.</p>
+
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Desciption</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>module name</td>
+</tr>
+<tr>
+<td>path</td>
+<td>module folder</td>
+</tr>
+<tr>
+<td>active</td>
+<td>module status (only actived module be loaded)</td>
+</tr>
+<tr>
+<td>associate</td>
+<td>List other modules link with this module.if module associated you call module models of all those modules.</td>
+</tr>
+<tr>
+<td>order</td>
+<td>Order loading module (ascending). Order loading sometimemake problems with order router.</td>
+</tr>
+<tr>
+<td>Duplicate</td>
+<td>Only the first active module loaded.Other modules with same name will be added path to this array. Remember module.name is unique in your project</td>
+</tr>
+</tbody>
+</table>
+
+<h3>
+<a id="nunjuck-filter" class="anchor" href="#nunjuck-filter" aria-hidden="true"><span class="octicon octicon-link"></span></a>Nunjuck filter</h3>
+
+<p>Nunjucks support developer make custom filter. To install custom filter to JerryJS, you need create folder name 'custom_filters' and make a filter like this example</p>
+
+<h3>
+<a id="using-middleware" class="anchor" href="#using-middleware" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using middleware</h3>
+
+<p>Add middleware before or after JerryJS.start. This middleware auto active. Middleware after app.listen is disable. Read more about middleware at Express site</p>
+
+<h3>
+<a id="sharing-module" class="anchor" href="#sharing-module" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sharing module</h3>
+
+<p>Many developer want to recycle module. With JerryJs you can save time to code.Only need zip your module folder and extract this to modules folder you can reuse this module.
+You can use layout 'modules' to extract module or use any software</p>
+      </section>
+
+      <footer>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <p>this project by <a href="https://github.com/trquoccuong">trquoccuong</a> can be found on <a href="https://github.com/trquoccuong/JerryJS">GitHub</a></p>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+        <p>Generated with <a href="https://pages.github.com">GitHub Pages</a> using Merlot</p>
+        <span class="octocat"></span>
+      </footer>
+
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-64598208-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
