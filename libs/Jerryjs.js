@@ -90,149 +90,147 @@ class Jerry {
             require(file)(envBack);
             require(file)(envFront);
         })
+        start(this.expressApplication,option);
         return;
-    }
-
-    start(option) {
-        let app = this.expressApplication;
-        let modules = {}
-
-        if (option && option.force) {
-            let link = JerryBase + userConfig.config.path + '/moduleConfig.json'
-            if (fs.existsSync(link)) {
-                fs.unlinkSync(link);
-            }
-        }
-        if (option && option.manager) {
-            if (!fs.existsSync(JerryBase + userConfig.modules.path + '/module')) {
-                fsEx.copySync(thisFolder + '/system/module/', JerryBase + '/modules/module/');
-            }
-            if (!fs.existsSync(JerryBase + userConfig.modules.path + '/router')) {
-                fsEx.copySync(thisFolder + '/system/router/', JerryBase + '/modules/router/');
-            }
-        }
-        ;
-
-        if (option && option.demo) {
-            if (!fs.existsSync(JerryBase + userConfig.modules.path + '/demo')) {
-                fsEx.copySync(thisFolder + '/demo/index/', JerryBase + '/modules/index/');
-            }
-        }
-
-        if (!fs.existsSync(JerryBase + userConfig.config.path + '/moduleConfig.json')) {
-            let i = 1;
-            glob.sync(JerryBase + userConfig.modules.path + '/*/module.js').forEach(function (file) {
-                let mClass = require(path.resolve(file));
-                let m = jerryModule(mClass, file);
-                if (m) {
-                    let moduleName = m.configurations.name;
-                    if (modules[moduleName]) {
-                        console.error(`Module ${moduleName} duplicated`);
-                        if (modules[moduleName].duplicate) {
-                            modules[moduleName].duplicate.push(path.resolve(file, '..'))
-                        } else {
-                            modules[moduleName].duplicate = [];
-                            modules[moduleName].duplicate.push(path.resolve(file, '..'))
-                        }
-                        return null
-                    }
-                    modules[moduleName] = {};
-                    modules[moduleName].name = moduleName;
-                    if (option && option.manager) {
-                        if (moduleName == 'router' || moduleName == "module") {
-                            modules[moduleName].active = true;
-
-                        } else {
-                            modules[moduleName].active = false;
-                        }
-                    } else {
-                        modules[moduleName].active = false;
-                    }
-                    modules[moduleName].path = path.resolve(file, '..');
-                    modules[moduleName].associate = [];
-                    modules[moduleName].order = i++;
-                }
-            })
-            let data = JSON.stringify(modules, null, 4);
-
-            fs.writeFileSync(JerryBase + userConfig.config.path + '/moduleConfig.json', data);
-
-            console.log(`Check file ${userConfig.config.path}/moduleConfig.js for active module `);
-        }
-
-        let moduleInfo = JSON.parse(fs.readFileSync(JerryBase + userConfig.config.path + '/moduleConfig.json', 'utf8'));
-        let arrModule = Object.keys(moduleInfo).map(function (key) {
-            return moduleInfo[key];
-        })
-
-        // Remove non active object;
-
-        let filtered = arrModule.filter(function (m) {
-            return m.active === true
-        })
-
-        // Reorder object;
-
-        let ordered = filtered.sort(function (a, b) {
-            return a.order - b.order;
-        })
-
-        ordered.forEach(function (m) {
-            let mClass = require(path.resolve(m.path + '/module.js'));
-            let mod = jerryModule(mClass, m.path + '/module.js', ordered);
-            modules[m.name] = mod;
-        })
-        /**
-         * Load route from modules
-         */
-        if (option && option.manager) {
-            let routerInfo = {};
-            routerInfo.front = {};
-            routerInfo.back = {};
-            for (let m in modules) {
-                if (modules.hasOwnProperty(m)) {
-                    if (modules[m].router) {
-                        routerInfo.front[m] = [];
-                        modules[m].router.stack.forEach(function (route) {
-                            let newRoute = {};
-                            newRoute.regexp = route.regexp.toString() || null;
-                            newRoute.path = route.route.path || null;
-                            newRoute.method = route.route.methods || null;
-                            routerInfo.front[m].push(newRoute);
-                        })
-                    }
-                    if (modules[m].admin && modules[m].admin.router) {
-                        routerInfo.back[m] = [];
-                        modules[m].router.stack.forEach(function (route) {
-                            let newRoute = {};
-                            newRoute.regexp = route.regexp.toString() || null;
-                            newRoute.path = route.route.path || null;
-                            newRoute.method = route.route.methods || null;
-                            routerInfo.back[m].push(newRoute);
-                        })
-                    }
-                }
-            }
-            let routerData = JSON.stringify(routerInfo, null, 4);
-
-            fs.writeFileSync(JerryBase + userConfig.config.path + '/routerTable.json', routerData);
-        }
-
-        for (let m in modules) {
-            if (modules.hasOwnProperty(m)) {
-                if (modules[m].router) {
-                    app.use('/', modules[m].router);
-                }
-                if (modules[m].admin && modules[m].admin.router) {
-                    app.use('/' + userConfig.adminRouter + '/', modules[m].admin.router);
-                }
-            }
-        }
-        return app
     }
 }
 
+function start(app,option) {
+    let modules = {}
 
+    if (option && option.force) {
+        let link = JerryBase + userConfig.config.path + '/moduleConfig.json'
+        if (fs.existsSync(link)) {
+            fs.unlinkSync(link);
+        }
+    }
+    if (option && option.manager) {
+        if (!fs.existsSync(JerryBase + userConfig.modules.path + '/module')) {
+            fsEx.copySync(thisFolder + '/system/module/', JerryBase + '/modules/module/');
+        }
+        if (!fs.existsSync(JerryBase + userConfig.modules.path + '/router')) {
+            fsEx.copySync(thisFolder + '/system/router/', JerryBase + '/modules/router/');
+        }
+    }
+    ;
+
+    if (option && option.demo) {
+        if (!fs.existsSync(JerryBase + userConfig.modules.path + '/demo')) {
+            fsEx.copySync(thisFolder + '/demo/index/', JerryBase + '/modules/index/');
+        }
+    }
+
+    if (!fs.existsSync(JerryBase + userConfig.config.path + '/moduleConfig.json')) {
+        let i = 1;
+        glob.sync(JerryBase + userConfig.modules.path + '/*/module.js').forEach(function (file) {
+            let mClass = require(path.resolve(file));
+            let m = jerryModule(mClass, file);
+            if (m) {
+                let moduleName = m.configurations.name;
+                if (modules[moduleName]) {
+                    console.error(`Module ${moduleName} duplicated`);
+                    if (modules[moduleName].duplicate) {
+                        modules[moduleName].duplicate.push(path.resolve(file, '..'))
+                    } else {
+                        modules[moduleName].duplicate = [];
+                        modules[moduleName].duplicate.push(path.resolve(file, '..'))
+                    }
+                    return null
+                }
+                modules[moduleName] = {};
+                modules[moduleName].name = moduleName;
+                if (option && option.manager) {
+                    if (moduleName == 'router' || moduleName == "module") {
+                        modules[moduleName].active = true;
+
+                    } else {
+                        modules[moduleName].active = false;
+                    }
+                } else {
+                    modules[moduleName].active = false;
+                }
+                modules[moduleName].path = path.resolve(file, '..');
+                modules[moduleName].associate = [];
+                modules[moduleName].order = i++;
+            }
+        })
+        let data = JSON.stringify(modules, null, 4);
+
+        fs.writeFileSync(JerryBase + userConfig.config.path + '/moduleConfig.json', data);
+
+        console.log(`Check file ${userConfig.config.path}/moduleConfig.js for active module `);
+    }
+
+    let moduleInfo = JSON.parse(fs.readFileSync(JerryBase + userConfig.config.path + '/moduleConfig.json', 'utf8'));
+    let arrModule = Object.keys(moduleInfo).map(function (key) {
+        return moduleInfo[key];
+    })
+
+    // Remove non active object;
+
+    let filtered = arrModule.filter(function (m) {
+        return m.active === true
+    })
+
+    // Reorder object;
+
+    let ordered = filtered.sort(function (a, b) {
+        return a.order - b.order;
+    })
+
+    ordered.forEach(function (m) {
+        let mClass = require(path.resolve(m.path + '/module.js'));
+        let mod = jerryModule(mClass, m.path + '/module.js', ordered);
+        modules[m.name] = mod;
+    })
+    /**
+     * Load route from modules
+     */
+    if (option && option.manager) {
+        let routerInfo = {};
+        routerInfo.front = {};
+        routerInfo.back = {};
+        for (let m in modules) {
+            if (modules.hasOwnProperty(m)) {
+                if (modules[m].router) {
+                    routerInfo.front[m] = [];
+                    modules[m].router.stack.forEach(function (route) {
+                        let newRoute = {};
+                        newRoute.regexp = route.regexp.toString() || null;
+                        newRoute.path = route.route.path || null;
+                        newRoute.method = route.route.methods || null;
+                        routerInfo.front[m].push(newRoute);
+                    })
+                }
+                if (modules[m].admin && modules[m].admin.router) {
+                    routerInfo.back[m] = [];
+                    modules[m].router.stack.forEach(function (route) {
+                        let newRoute = {};
+                        newRoute.regexp = route.regexp.toString() || null;
+                        newRoute.path = route.route.path || null;
+                        newRoute.method = route.route.methods || null;
+                        routerInfo.back[m].push(newRoute);
+                    })
+                }
+            }
+        }
+        let routerData = JSON.stringify(routerInfo, null, 4);
+
+        fs.writeFileSync(JerryBase + userConfig.config.path + '/routerTable.json', routerData);
+    }
+
+    for (let m in modules) {
+        if (modules.hasOwnProperty(m)) {
+            if (modules[m].router) {
+                app.use('/', modules[m].router);
+            }
+            if (modules[m].admin && modules[m].admin.router) {
+                app.use('/' + userConfig.adminRouter + '/', modules[m].admin.router);
+            }
+        }
+    }
+    return app
+}
 /**
  *
  */

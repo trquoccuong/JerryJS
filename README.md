@@ -30,8 +30,9 @@ For beginner
 'use strict';
 var JerryJS = require("jerryjs");
 var app = new JerryJS;
-app.config();
-app.start({ force : true , manager : true , demo : true });
+
+app.config({ force : true , manager : true , demo : true });
+
 app.listen(8118);
 ```
 3. Run a command
@@ -252,7 +253,7 @@ Nunjucks support developer make custom filter. To install custom filter to Jerry
 
 ### Using middleware
 
-Add middleware before or after app.start. This middleware auto active. Middleware after app.listen is disable. Read more about middleware at Express site
+Add middleware before or after app.config. This middleware auto active. Middleware after app.listen is disable. Read more about middleware at Express site
 
 ### Sharing module
 
