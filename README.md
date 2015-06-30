@@ -28,12 +28,10 @@ For beginner
 2. Make a file server.js
 ``` 
 'use strict';
-var express = require('express');
 var JerryJS = require("jerryjs");
-
-var app = express();
-JerryJS.config();
-JerryJS.start(app,{ force : true , manager : true , demo : true });
+var app = new JerryJS;
+app.config();
+app.start({ force : true , manager : true , demo : true });
 app.listen(8118);
 ```
 3. Run a command

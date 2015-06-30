@@ -1,5 +1,5 @@
 'use strict';
 
-let Jerry = require('./libs/Jerry');
+let Jerry = require('./libs/Jerryjs');
 
 module.exports = Jerry;
