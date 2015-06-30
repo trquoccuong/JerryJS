@@ -252,7 +252,7 @@ Nunjucks support developer make custom filter. To install custom filter to Jerry
 
 ### Using middleware
 
-Add middleware before or after JerryJS.start. This middleware auto active. Middleware after app.listen is disable. Read more about middleware at Express site
+Add middleware before or after app.start. This middleware auto active. Middleware after app.listen is disable. Read more about middleware at Express site
 
 ### Sharing module
 
