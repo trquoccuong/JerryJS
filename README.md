@@ -6,10 +6,9 @@
 
 ### Setup JerryJS
 
-JerryJS cover Express so you need install express.
+Install jerryjs
 ```
 $ npm install jerryjs
-$ npm install express
 ```
 If you use database you need install some package depend on your database
 ```    
@@ -30,9 +29,7 @@ For beginner
 'use strict';
 var JerryJS = require("jerryjs");
 var app = new JerryJS;
-
 app.config({ force : true , manager : true , demo : true });
-
 app.listen(8118);
 ```
 3. Run a command
@@ -41,6 +38,10 @@ $ node server.js
 ```
 4. Go to browser with link http://localhost:8118/modules
 
+5. You can go to config/moduleConfig.json
+Change **active** property to true
+
+6. Restart application and go to http://localhost:8118/
 
 ### JerryJS start option
 
@@ -51,6 +52,7 @@ $ node server.js
 | demo |  enable demo module|
 
 ### JerryJS project construction
+
 ```
 -Your project
 ----config
@@ -71,8 +73,9 @@ $ node server.js
 | modules | folder contain all your modules |
 | custom_filters | nunjucks custom filter (optional) |
 | layout | backend, frontend layout (optional) |
-| public | resources(*.css,*.js,*.jpg , v.v) |
+| public | resources(*.css , *.js, *.jpg , v.v) |
 | server.js | running JerryJS |
+
 ### JerryJS module construction 
 
 ```
@@ -244,7 +247,7 @@ JerryJS auto create a file moduleConfig.json. This file contain all modules info
 | path | module folder |
 | active | module status (only actived module be loaded) |
 | associate | List other modules link with this module.if module associated you call module models of all those modules. |
-| order | Order loading module (ascending). Order loading sometimemake problems with order router. |
+| order | Order loading module (ascending). Order loading sometime make problems with order router. |
 | Duplicate | Only the first active module loaded.Other modules with same name will be added path to this array. Remember module.name is unique in your project |
 
 ### Nunjuck filter

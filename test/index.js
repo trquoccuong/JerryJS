@@ -1,10 +1,11 @@
 var should = require('chai').should(),
-    jerry = require('../index'),
-    config = jerry.config,
-    start = jerry.start;
+    Jerry = require('../index');
 
-describe('Testing jerry', function () {
-    it('Testing config', function () {
-        config.should.equal(undefined);
+describe('Testing Jerry Framework', function () {
+    it('Testing Jerry', function () {
+        Jerry.should.be.a.Function;
+    })
+    it('Testing new application', function () {
+        (new Jerry).should.be.a.Object;
     })
 })

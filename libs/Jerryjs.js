@@ -115,7 +115,7 @@ function start(app,option) {
     ;
 
     if (option && option.demo) {
-        if (!fs.existsSync(JerryBase + userConfig.modules.path + '/demo')) {
+        if (!fs.existsSync(JerryBase + userConfig.modules.path + '/index')) {
             fsEx.copySync(thisFolder + '/demo/index/', JerryBase + '/modules/index/');
         }
     }

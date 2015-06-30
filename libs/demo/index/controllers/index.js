@@ -4,7 +4,7 @@ class Controllers extends JerryController {
         constructor(models) {
                 super(models);
                 this.index = function (req, res) {
-                        res.send('Hello World');
+                        res.send('Hello Jerry');
                 };
         }
 }
