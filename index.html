@@ -59,10 +59,9 @@
 <h3>
 <a id="setup-jerryjs" class="anchor" href="#setup-jerryjs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup JerryJS</h3>
 
-<p>JerryJS cover Express so you need install express.</p>
+<p>Install jerryjs</p>
 
 <pre><code>$ npm install jerryjs
-$ npm install express
 </code></pre>
 
 <p>If you use database you need install some package depend on your database</p>
@@ -88,9 +87,7 @@ $ npm install sqlite3
 <pre><code>'use strict';
 var JerryJS = require("jerryjs");
 var app = new JerryJS;
-
 app.config({ force : true , manager : true , demo : true });
-
 app.listen(8118);
 </code></pre>
 
@@ -102,7 +99,10 @@ app.listen(8118);
 </code></pre>
 
 <ol>
-<li>Go to browser with link http://localhost:8118/modules</li>
+<li><p>Go to browser with link http://localhost:8118/modules</p></li>
+<li><p>You can go to config/moduleConfig.json
+Change <strong>active</strong> property to true</p></li>
+<li><p>Restart application and go to http://localhost:8118/</p></li>
 </ol>
 
 <h3>
@@ -173,7 +173,7 @@ app.listen(8118);
 </tr>
 <tr>
 <td>public</td>
-<td>resources(<em>.css,</em>.js,*.jpg , v.v)</td>
+<td>resources(*.css , *.js, *.jpg , v.v)</td>
 </tr>
 <tr>
 <td>server.js</td>
@@ -451,7 +451,7 @@ module.exports = DemoRouter;
 </tr>
 <tr>
 <td>order</td>
-<td>Order loading module (ascending). Order loading sometimemake problems with order router.</td>
+<td>Order loading module (ascending). Order loading sometime make problems with order router.</td>
 </tr>
 <tr>
 <td>Duplicate</td>
