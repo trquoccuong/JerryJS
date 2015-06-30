@@ -88,8 +88,9 @@ $ npm install sqlite3
 <pre><code>'use strict';
 var JerryJS = require("jerryjs");
 var app = new JerryJS;
-app.config();
-app.start({ force : true , manager : true , demo : true });
+
+app.config({ force : true , manager : true , demo : true });
+
 app.listen(8118);
 </code></pre>
 
@@ -467,7 +468,7 @@ module.exports = DemoRouter;
 <h3>
 <a id="using-middleware" class="anchor" href="#using-middleware" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using middleware</h3>
 
-<p>Add middleware before or after JerryJS.start. This middleware auto active. Middleware after app.listen is disable. Read more about middleware at Express site</p>
+<p>Add middleware before or after app.config. This middleware auto active. Middleware after app.listen is disable. Read more about middleware at Express site</p>
 
 <h3>
 <a id="sharing-module" class="anchor" href="#sharing-module" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sharing module</h3>
