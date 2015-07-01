@@ -28,10 +28,16 @@ class Jerry {
                 this[func] = self[func];
             }
         }
+        let stack = calls();
+        let requester = stack[1].getFileName();
+        global.JerryBase = path.dirname(requester);
+        global.JerryModule = require('./JerryModule');
+        global.JerryController = require('./JerryController');
+        global.JerryRouter = require('./JerryRouter');
+
     }
 
     config(option) {
-        let stack = calls();
         let defaultConfig = {
             backend: {
                 path: '/layout/admin'
@@ -50,17 +56,11 @@ class Jerry {
                 path: '/custom_filters'
             }
         }
-        let requester = stack[1].getFileName();
         userConfig = defaultConfig;
         /**
          * Install global function
          */
 
-        if (userConfig.basePath) {
-            global.JerryBase = userConfig.basePath;
-        } else {
-            global.JerryBase = path.dirname(requester);
-        }
         let config;
         if (!fs.existsSync(JerryBase + userConfig.config.path)) {
             fs.mkdirSync(JerryBase + userConfig.config.path);
@@ -77,10 +77,6 @@ class Jerry {
         if (userConfig.database && userConfig.database.connString) {
             db = new Sequelize(userConfig.database.connString, userConfig.database.option);
         }
-
-        global.JerryModule = require('./JerryModule');
-        global.JerryController = require('./JerryController');
-        global.JerryRouter = require('./JerryRouter');
 
         /**
          * Install View

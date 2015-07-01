@@ -20,6 +20,5 @@ module.exports = {
     database : {
         //connString : 'postgres://quoccuong:@localhost:5432/tech',
         //option : { logging : false}
-    },
-    basePath : require('path').resolve(__dirname,'..')
+    }
 }
