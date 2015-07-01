@@ -9,6 +9,7 @@ let nunjucks = require('nunjucks');
 let _ = require('lodash');
 let calls = require('callsite');
 let fsEx = require('fs-extra');
+let bodyParser = require('body-parser');
 let thisFolder = __dirname;
 
 let db;
@@ -34,6 +35,8 @@ class Jerry {
         global.JerryModule = require('./JerryModule');
         global.JerryController = require('./JerryController');
         global.JerryRouter = require('./JerryRouter');
+        this.expressApplication.use(express.static(JerryBase + '/public'));
+
 
     }
 
@@ -89,6 +92,10 @@ class Jerry {
             require(file)(envFront);
         })
         start(this.expressApplication,option);
+        this.expressApplication.use(bodyParser.urlencoded({
+            extended: false
+        }));
+        this.expressApplication.use(bodyParser.raw());
         return;
     }
 }

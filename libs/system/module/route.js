@@ -5,6 +5,7 @@ class ModuleRouter extends JerryRouter {
         super()
         this.route('/modules').get(controllers.index);
         this.route('/modules/import').post(controllers.importModule);
+        this.route('/modules/save').post(controllers.saveModule);
     }
 }
 

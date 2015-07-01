@@ -12,9 +12,10 @@ $ npm install jerryjs
 ```
 If you use database you need install some package depend on your database
 ```    
-$ npm install pg pg-hstore // for Postgres
-$ npm install mysql
-$ npm install sqlite3
+$ npm install --save pg pg-hstore
+$ npm install --save mysql // For both mysql and mariadb dialects
+$ npm install --save sqlite3
+$ npm install --save tedious // MSSQL
 
 ```
 ### JerryJS Requirement
@@ -50,6 +51,11 @@ Change **active** property to true
 | force | remake file module Manager every run node |
 | manager | enable 2 support module |
 | demo |  enable demo module|
+
+For enable manager you need install 2 npm:
+```
+$npm install formidable adm-zip
+```
 
 ### JerryJS project construction
 

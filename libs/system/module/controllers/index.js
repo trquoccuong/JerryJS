@@ -54,6 +54,15 @@ class Controllers extends JerryController {
                 
             });
         }
+        this.saveModule = function (req,res) {
+            let data = JSON.parse(req.body.info)
+            let test = JSON.stringify(data,null,4);
+            fs.writeFileSync(JerryBase + config.config.path + '/moduleConfig.json', test);
+            res.json({
+                type: 'success'
+            })
+            process.exit();
+        }
     }
 }
 

@@ -1,10 +1,12 @@
 'use strict';
 
 class Controllers extends JerryController {
-        constructor(models) {
-                super(models);
+        constructor(myModule) {
+                super(myModule);
                 this.index = function (req, res) {
-                        res.send('Hello Jerry');
+                    myModule.render('index').then(function (html) {
+                        res.send(html);
+                    })
                 };
         }
 }

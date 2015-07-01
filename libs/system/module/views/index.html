@@ -32,19 +32,19 @@
   </style>
   <script>
     $(function() {
-//      $( "#sortable" ).sortable({
-//        placeholder: "ui-state-highlight"
-//      });
-//      $("#sortable").on('click','.moduleStatus', function (event) {
-//        event.preventDefault();
-//        if($(this).text() === "Off") {
-//          $(this).removeClass('btn-danger').addClass('btn-success');
-//          $(this).text("Active")
-//        } else {
-//          $(this).removeClass('btn-success').addClass('btn-danger');
-//          $(this).text("Off")
-//        }
-//      })
+      $( "#sortable" ).sortable({
+        placeholder: "ui-state-highlight"
+      });
+      $("#sortable").on('click','.moduleStatus', function (event) {
+        event.preventDefault();
+        if($(this).text() === "Off") {
+          $(this).removeClass('btn-danger').addClass('btn-success');
+          $(this).text("Active")
+        } else {
+          $(this).removeClass('btn-success').addClass('btn-danger');
+          $(this).text("Off")
+        }
+      })
     });
 
   </script>
@@ -62,7 +62,10 @@
     </div>
     <div class="navbar-form navbar-right" >
       <button class="btn btn-default" onclick="$('#zip_file').click();">Import</button>
-      {#<button class="btn btn-primary">Save</button>#}
+        <a class="btn btn-danger" data-toggle="modal" href="javascript:void(0)"
+           onclick="openSaveConfirmModal()">
+            <i class="fa fa-remove"></i> Save
+        </a>
         <form method="post" action="/modules/import" enctype="multipart/form-data">
             <input type="file" id="zip_file" name="zip_file" onchange="this.form.submit();" style="display: none;" />
         </form>
@@ -70,6 +73,24 @@
 
   </div><!-- /.container-fluid -->
 </nav>
+<div class="modal fade" id="confirm-save-modal" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Confirm Save</h4>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to save settings?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" onclick="saveFile()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container">
   <ul id="sortable" class="list-group">
     {% for module in data %}
@@ -87,7 +108,7 @@
           </h6>
           <div>
             <b>Associate:</b>
-            <select class="select-box pull-right" multiple="multiple" style="width: 80%" disabled>
+            <select class="select-box pull-right" multiple="multiple" style="width: 80%" >
               {% for mod in data %}
                 {% if mod.name != module.name %}
                   <option value="{{ mod.name }}" {% for name in module.associate %} {% if name == mod.name %} selected {% endif %}{% endfor %}>{{ mod.name }}</option>
@@ -101,6 +122,55 @@
 </div>
 </body>
 <script>
-  $(".select-box").select2();
+    'use strict'
+  $(".select-box").select2({
+      placeholder: "Select module",
+      templateSelection: function(option){
+          var text = $(option.element).text().trim();
+          text = text.replace(/^[—]+/, '');
+          return text;
+      }
+  });
+  function saveFile(){
+      var arrayModule = document.getElementsByClassName('list-group-item');
+      var data = {};
+      let order = 0;
+      for (let key in arrayModule){
+          if(arrayModule.hasOwnProperty(key) && typeof arrayModule[key] == 'object') {
+              let domModule = arrayModule[key];
+              let moduleName = domModule.childNodes[1].childNodes[0].nodeValue.trim();
+              data[moduleName]= {};
+              data[moduleName]['name'] = moduleName;
+              let moduleStatus = domModule.childNodes[1].childNodes[1].childNodes[0].nodeValue;
+              if (moduleStatus === 'Active') {
+                  data[moduleName]['active'] = true;
+              } else if (moduleStatus === 'Off'){
+                  data[moduleName]['active'] = false;
+              }
+              let modulePath = domModule.childNodes[3].childNodes[1].childNodes[0].nodeValue;
+              data[moduleName]['path'] = modulePath;
+              data[moduleName]['associate'] = [];
+              let y = $(domModule.childNodes[5]).find('li.select2-selection__choice');
+              for(let m in y){
+                  if(y.hasOwnProperty(m) && y[m].tagName == 'LI'){
+                      let name = y[m].childNodes[1].nodeValue;
+                      data[moduleName]['associate'].push(name);
+                  }
+              }
+              data[moduleName]["order"] = ++order;
+          }
+      }
+      $.ajax({
+          type: "POST",
+          url: '/modules/save',
+          data: {info : JSON.stringify(data)}
+      }).done(function (k) {
+          alert('Server need to restart');
+          $('#confirm-save-modal').modal('hide');
+      });
+  };
+  function openSaveConfirmModal(){
+      $('#confirm-save-modal').modal('show');
+  };
 </script>
 </html>
