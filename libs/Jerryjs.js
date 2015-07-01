@@ -36,7 +36,10 @@ class Jerry {
         global.JerryController = require('./JerryController');
         global.JerryRouter = require('./JerryRouter');
         this.expressApplication.use(express.static(JerryBase + '/public'));
-
+        this.expressApplication.use(bodyParser.urlencoded({
+            extended: false
+        }));
+        this.expressApplication.use(bodyParser.raw());
 
     }
 
@@ -92,10 +95,6 @@ class Jerry {
             require(file)(envFront);
         })
         start(this.expressApplication,option);
-        this.expressApplication.use(bodyParser.urlencoded({
-            extended: false
-        }));
-        this.expressApplication.use(bodyParser.raw());
         return;
     }
 }
