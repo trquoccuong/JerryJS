@@ -66,9 +66,10 @@
 
 <p>If you use database you need install some package depend on your database</p>
 
-<pre><code>$ npm install pg pg-hstore // for Postgres
-$ npm install mysql
-$ npm install sqlite3
+<pre><code>$ npm install --save pg pg-hstore
+$ npm install --save mysql // For both mysql and mariadb dialects
+$ npm install --save sqlite3
+$ npm install --save tedious // MSSQL
 
 </code></pre>
 
@@ -130,6 +131,11 @@ Change <strong>active</strong> property to true</p></li>
 </tr>
 </tbody>
 </table>
+
+<p>For enable manager you need install 2 npm:</p>
+
+<pre><code>$npm install formidable adm-zip
+</code></pre>
 
 <h3>
 <a id="jerryjs-project-construction" class="anchor" href="#jerryjs-project-construction" aria-hidden="true"><span class="octicon octicon-link"></span></a>JerryJS project construction</h3>
