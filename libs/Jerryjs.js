@@ -24,6 +24,8 @@ class Jerry {
         for (let func in self) {
             if (typeof self[func] == 'function') {
                 this[func] = self[func].bind(self);
+            }else {
+                this[func] = self[func];
             }
         }
     }
