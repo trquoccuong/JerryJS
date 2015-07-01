@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "adm-zip": "^0.4.7",
+    "body-parser": "^1.13.1",
     "callsite": "^1.0.0",
     "express": "^4.13.0",
     "formidable": "^1.0.17",
