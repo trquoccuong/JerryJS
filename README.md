@@ -56,6 +56,12 @@ For enable manager you need install 2 npm:
 ```
 $npm install formidable adm-zip
 ```
+### JerryJS function
+
+| Function  | Desciption |
+| ------------- | ------------- |
+| config | init JerryJS system |
+| before | Add firstly router(for authentication) |
 
 ### JerryJS project construction
 
@@ -214,6 +220,7 @@ You must code this inside controller. Sequelize support many method for query
 
 ### Make a route
 Jerryjs have all feature of express router. you must declare router inside constructor . You only call controllers of this module. if controller is declared, program will throw an error
+
 ```
 'use strict';
 
@@ -256,13 +263,78 @@ JerryJS auto create a file moduleConfig.json. This file contain all modules info
 | order | Order loading module (ascending). Order loading sometime make problems with order router. |
 | Duplicate | Only the first active module loaded.Other modules with same name will be added path to this array. Remember module.name is unique in your project |
 
+
+### Default settings Jerry
+
+```
+    app.use(express.static(JerryBase + '/public'));
+    app.use(bodyParser.urlencoded({
+        extended: false
+    }));
+    app.use(cookieParser());
+    app.use(helmet());
+```
+For custom setting
+1. Make file **express.js** inside **config** folder
+2. Add setting like example
+```
+'use strict';
+let express = require('express');
+let bodyParser = require('body-parser');
+let cookieParser = require('cookie-parser');
+let helmet = require('helmet');
+
+module.exports = function(app) {
+app.use(express.static(JerryBase + '/public'));
+    app.use(bodyParser.urlencoded({
+        extended: false
+    }));
+    app.use(cookieParser());
+    app.use(helmet());
+}
+
+```
+
 ### Nunjuck filter
 
 Nunjucks support developer make custom filter. To install custom filter to JerryJS, you need create folder name 'custom_filters' and make a filter like this example
+Demo filter
+```
+"use strict";
+
+let fs = require('fs');
+let config = require(JerryBase + '/config/config');
+
+module.exports = function (env) {
+    env.addFilter('get_theme', function (name) {
+        let theme_path = JerryBase + '/themes/' + config.themes + "/" + name;
+        if (!fs.existsSync(theme_path)) {
+            return 'default/' + name;
+        } else {
+            return config.themes + "/" + name;
+        }
+    });
+};
+
+```
+
 
 ### Using middleware
 
 Add middleware before or after app.config. This middleware auto active. Middleware after app.listen is disable. Read more about middleware at Express site
+
+```
+let app = new Jerry;
+
+app.use(function(req,res,next){
+    console.log(req.url);
+    next()
+}
+app.config({ manager : true , demo : true });
+
+
+app.listen(8118);
+```
 
 ### Sharing module
 

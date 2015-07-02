@@ -10,6 +10,8 @@ let _ = require('lodash');
 let calls = require('callsite');
 let fsEx = require('fs-extra');
 let bodyParser = require('body-parser');
+let helmet = require('helmet');
+let cookieParser = require('cookie-parser')
 let thisFolder = __dirname;
 
 let db;
@@ -20,6 +22,7 @@ let userConfig;
 class Jerry {
     constructor() {
         this.modules = [];
+        this.beforeFunction = [];
         this.expressApplication = express();
         let self = this.expressApplication;
         for (let func in self) {
@@ -35,12 +38,7 @@ class Jerry {
         global.JerryModule = require('./JerryModule');
         global.JerryController = require('./JerryController');
         global.JerryRouter = require('./JerryRouter');
-        this.expressApplication.use(express.static(JerryBase + '/public'));
-        this.expressApplication.use(bodyParser.urlencoded({
-            extended: false
-        }));
-        this.expressApplication.use(bodyParser.raw());
-
+        expressApp(this.expressApplication);
     }
 
     config(option) {
@@ -94,12 +92,19 @@ class Jerry {
             require(file)(envBack);
             require(file)(envFront);
         })
-        start(this.expressApplication,option);
+
+        start(this.expressApplication,option,this.beforeFunction);
         return;
+    }
+
+    before(func) {
+        if(typeof func == "function") {
+            this.beforeFunction.push(func);
+        }
     }
 }
 
-function start(app,option) {
+function start(app,option,beforeFunc) {
     let modules = {}
 
     if (option && option.force) {
@@ -221,6 +226,12 @@ function start(app,option) {
         let routerData = JSON.stringify(routerInfo, null, 4);
 
         fs.writeFileSync(JerryBase + userConfig.config.path + '/routerTable.json', routerData);
+    }
+
+    if(beforeFunc.length > 0 ){
+        for(let k in beforeFunc){
+            beforeFunc[k](app);
+        }
     }
 
     for (let m in modules) {
@@ -426,6 +437,20 @@ function jerryModule(moduleClass, pathModule, listModule) {
     }
     return jerryModule
 }
+function expressApp(app) {
+    if(fs.existsSync(JerryBase + '/config/express.js')){
+        require(JerryBase + '/config/express.js')(app);
+    } else {
+        app.use(express.static(JerryBase + '/public'));
+        app.use(bodyParser.urlencoded({
+            extended: false
+        }));
+        app.use(cookieParser());
+        app.use(helmet());
+    }
+}
+
+
 /**
  * SUPPORT FUNCTION
  */
