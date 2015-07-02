@@ -63,6 +63,25 @@ $npm install formidable adm-zip
 | config | init JerryJS system |
 | before | Add firstly router(for authentication) |
 
+### Easy to use Jerry generator
+For easy to use JerryJs you should install jerryjs-generator
+
+```
+$ npm install -g git reset --hard origin/master //maybe need sudo
+```
+
+For create jerry structure
+```
+$ jerry scafford // Make jerry folder
+```
+For make a module
+
+```
+$ jerry module <module name>    // render module with frontend and backend
+$ jerry module <module name> -f // only render module with frontend
+$ jerry module <module name> -b // only render module with backend
+```
+
 ### JerryJS project construction
 
 ```

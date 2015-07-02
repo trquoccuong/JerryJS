@@ -1,6 +1,6 @@
 {
   "name": "jerryjs",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Mini framework nodejs base Express",
   "main": "index.js",
   "scripts": {
