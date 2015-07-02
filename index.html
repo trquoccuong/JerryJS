@@ -138,6 +138,28 @@ Change <strong>active</strong> property to true</p></li>
 </code></pre>
 
 <h3>
+<a id="jerryjs-function" class="anchor" href="#jerryjs-function" aria-hidden="true"><span class="octicon octicon-link"></span></a>JerryJS function</h3>
+
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Desciption</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>config</td>
+<td>init JerryJS system</td>
+</tr>
+<tr>
+<td>before</td>
+<td>Add firstly router(for authentication)</td>
+</tr>
+</tbody>
+</table>
+
+<h3>
 <a id="jerryjs-project-construction" class="anchor" href="#jerryjs-project-construction" aria-hidden="true"><span class="octicon octicon-link"></span></a>JerryJS project construction</h3>
 
 <pre><code>-Your project
@@ -467,14 +489,77 @@ module.exports = DemoRouter;
 </table>
 
 <h3>
+<a id="default-settings-jerry" class="anchor" href="#default-settings-jerry" aria-hidden="true"><span class="octicon octicon-link"></span></a>Default settings Jerry</h3>
+
+<pre><code>    app.use(express.static(JerryBase + '/public'));
+    app.use(bodyParser.urlencoded({
+        extended: false
+    }));
+    app.use(cookieParser());
+    app.use(helmet());
+</code></pre>
+
+<p>For custom setting
+1. Make file <strong>express.js</strong> inside <strong>config</strong> folder
+2. Add setting like example</p>
+
+<pre><code>'use strict';
+let express = require('express');
+let bodyParser = require('body-parser');
+let cookieParser = require('cookie-parser');
+let helmet = require('helmet');
+
+module.exports = function(app) {
+app.use(express.static(JerryBase + '/public'));
+    app.use(bodyParser.urlencoded({
+        extended: false
+    }));
+    app.use(cookieParser());
+    app.use(helmet());
+}
+
+</code></pre>
+
+<h3>
 <a id="nunjuck-filter" class="anchor" href="#nunjuck-filter" aria-hidden="true"><span class="octicon octicon-link"></span></a>Nunjuck filter</h3>
 
-<p>Nunjucks support developer make custom filter. To install custom filter to JerryJS, you need create folder name 'custom_filters' and make a filter like this example</p>
+<p>Nunjucks support developer make custom filter. To install custom filter to JerryJS, you need create folder name 'custom_filters' and make a filter like this example
+Demo filter</p>
+
+<pre><code>"use strict";
+
+let fs = require('fs');
+let config = require(JerryBase + '/config/config');
+
+module.exports = function (env) {
+    env.addFilter('get_theme', function (name) {
+        let theme_path = JerryBase + '/themes/' + config.themes + "/" + name;
+        if (!fs.existsSync(theme_path)) {
+            return 'default/' + name;
+        } else {
+            return config.themes + "/" + name;
+        }
+    });
+};
+
+</code></pre>
 
 <h3>
 <a id="using-middleware" class="anchor" href="#using-middleware" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using middleware</h3>
 
 <p>Add middleware before or after app.config. This middleware auto active. Middleware after app.listen is disable. Read more about middleware at Express site</p>
+
+<pre><code>let app = new Jerry;
+
+app.use(function(req,res,next){
+    console.log(req.url);
+    next()
+}
+app.config({ manager : true , demo : true });
+
+
+app.listen(8118);
+</code></pre>
 
 <h3>
 <a id="sharing-module" class="anchor" href="#sharing-module" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sharing module</h3>
