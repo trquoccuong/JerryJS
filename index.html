@@ -1,52 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=640">
-
-    <link rel="stylesheet" href="stylesheets/core.css" media="screen">
-    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)">
-    <link rel="stylesheet" href="stylesheets/github-light.css">
-
-    <script type="text/javascript" src="javascripts/modernizr.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
-    <script type="text/javascript">
-      $(document).ready(function () {
-        $('#main_content').headsmart()
-      })
-    </script>
+    <meta charset="UTF-8">
     <title>Jerryjs by trquoccuong</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
-
   <body>
-    <a id="forkme_banner" href="https://github.com/trquoccuong/JerryJS">View on GitHub</a>
-    <div class="shell">
+    <section class="page-header">
+      <h1 class="project-name">Jerryjs</h1>
+      <h2 class="project-tagline">Nodejs Framework</h2>
+      <a href="https://github.com/trquoccuong/JerryJS" class="btn">View on GitHub</a>
+      <a href="https://github.com/trquoccuong/JerryJS/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/trquoccuong/JerryJS/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-      <header>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <h1>Jerryjs</h1>
-            <h2>Nodejs Framework</h2>
-          </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
-      </header>
-
-      <section id="downloads">
-        <span class="inner">
-          <a href="https://github.com/trquoccuong/JerryJS/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/trquoccuong/JerryJS/tarball/master" class="tgz"><em>download</em> .TGZ</a>
-        </span>
-      </section>
-
-
-      <span class="banner-fix"></span>
-
-
-      <section id="main_content">
-        <h1>
+    <section class="main-content">
+      <h1>
 <a id="jerryjs" class="anchor" href="#jerryjs" aria-hidden="true"><span class="octicon octicon-link"></span></a>JerryJS</h1>
 
 <h3>
@@ -158,6 +131,26 @@ Change <strong>active</strong> property to true</p></li>
 </tr>
 </tbody>
 </table>
+
+<h3>
+<a id="easy-to-use-jerry-generator" class="anchor" href="#easy-to-use-jerry-generator" aria-hidden="true"><span class="octicon octicon-link"></span></a>Easy to use Jerry generator</h3>
+
+<p>For easy to use JerryJs you should install jerryjs-generator</p>
+
+<pre><code>$ npm install -g jerryjs-generator //maybe need sudo
+</code></pre>
+
+<p>For create jerry structure</p>
+
+<pre><code>$ jerry scafford // Make jerry folder
+</code></pre>
+
+<p>For make a module</p>
+
+<pre><code>$ jerry module &lt;module name&gt;    // render module with frontend and backend
+$ jerry module &lt;module name&gt; -f // only render module with frontend
+$ jerry module &lt;module name&gt; -b // only render module with backend
+</code></pre>
 
 <h3>
 <a id="jerryjs-project-construction" class="anchor" href="#jerryjs-project-construction" aria-hidden="true"><span class="octicon octicon-link"></span></a>JerryJS project construction</h3>
@@ -566,23 +559,16 @@ app.listen(8118);
 
 <p>Many developer want to recycle module. With JerryJs you can save time to code.Only need zip your module folder and extract this to modules folder you can reuse this module.
 You can use layout 'modules' to extract module or use any software</p>
-      </section>
 
-      <footer>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <p>this project by <a href="https://github.com/trquoccuong">trquoccuong</a> can be found on <a href="https://github.com/trquoccuong/JerryJS">GitHub</a></p>
-          </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
-        <p>Generated with <a href="https://pages.github.com">GitHub Pages</a> using Merlot</p>
-        <span class="octocat"></span>
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/trquoccuong/JerryJS">Jerryjs</a> is maintained by <a href="https://github.com/trquoccuong">trquoccuong</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
 
-    </div>
+    </section>
 
-              <script type="text/javascript">
+            <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
@@ -595,3 +581,4 @@ You can use layout 'modules' to extract module or use any software</p>
 
   </body>
 </html>
+
