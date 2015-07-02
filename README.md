@@ -72,7 +72,7 @@ $ npm install -g jerryjs-generator //maybe need sudo
 
 For create jerry structure
 ```
-$ jerry scafford // Make jerry folder
+$ jerry scaffold // Make jerry folder
 ```
 For make a module
 
