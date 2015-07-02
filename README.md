@@ -67,7 +67,7 @@ $npm install formidable adm-zip
 For easy to use JerryJs you should install jerryjs-generator
 
 ```
-$ npm install -g git reset --hard origin/master //maybe need sudo
+$ npm install -g jerryjs-generator //maybe need sudo
 ```
 
 For create jerry structure
